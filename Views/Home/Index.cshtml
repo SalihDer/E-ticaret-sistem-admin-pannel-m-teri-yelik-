@@ -1,0 +1,47 @@
+﻿@model IEnumerable<lsad.Models.Category>
+@{
+    ViewBag.Title = "Home Page";
+}
+<br />
+<br />
+@if (User.Identity.IsAuthenticated)
+{
+    if (User.IsInRole("Seller") || User.IsInRole("Admins"))
+    {
+
+        <div>
+
+            <p><h1> @Html.ActionLink("Create New Product", "Create", "Products")</h1></p>
+
+        </div>}
+}
+        @foreach (var item in Model)
+        {
+
+            <h1>@Html.DisplayFor(modelItem => item.CategoryName)</h1>
+
+            <div class="row">
+
+
+                @foreach (var subItem in item.Product)
+                {
+
+                    <div class="col-md-3 thumbnail" style="height:400px; margin-bottom:30px; ">
+
+                        <img src="~/Uploads/@subItem.ProductImage" style="width:200px;height:200px;">
+                        <h3>@Html.DisplayFor(modelItem => subItem.ProductContent)</h3>
+
+                        <h5>@Html.DisplayFor(modelItem => subItem.ProductTitle)</h5>
+                        @Html.ActionLink("Details", "Details", new { ProductId = subItem.Id })
+                    </div>
+                }
+
+            </div>
+
+
+
+        }
+
+
+
+
